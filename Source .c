@@ -1,8 +1,8 @@
 /*
-	ƒrƒ‹ƒh‚·‚é‘O‚É
-	scanf_s() ¨ scanf()
-	strcpy_s() ¨ strcpy()
-	“ü—Í2,10,16i”–¢‘Î‰
+ãƒ“ãƒ«ãƒ‰ã™ã‚‹å‰ã«
+scanf_s() â†’ scanf()
+strcpy_s() â†’ strcpy()
+å…¥åŠ›2,10,16é€²æ•°æœªå¯¾å¿œ
 */
 
 #include<stdio.h>
@@ -19,7 +19,7 @@
 #define DEC 10
 #define HEX 16
 
-//ƒvƒƒgƒ^ƒCƒvéŒ¾
+//ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 int InCheck(const char *, int *);
 void OutChange(double *, int *);
 void printhelp();
@@ -30,8 +30,8 @@ int main(void) {
 	double n = 0.0, m, a;
 	double memory = 0.0;
 	int calmode = ARITHMETIC;
-	int inmode, outmode, i,count;
-	inmode = outmode = DEC;//‰Šú‚Í10i”
+	int inmode, outmode, i, count;
+	inmode = outmode = DEC;//åˆæœŸã¯10é€²æ•°
 	char sw[100];
 
 	printf("Function Mode\n");
@@ -44,28 +44,21 @@ int main(void) {
 		m = 0.0;
 		scanf_s("%s", sw, 100);
 		if (!strcmp(sw, "\\q"))break;
-		else if (!strcmp(sw, "\\f")) { calmode = FUNCTION;		printf("Function Mode\n");		continue; } 
-		else if (!strcmp(sw, "\\a")) { calmode = ARITHMETIC;	printf("Arithemetic Mode\n");	continue; }
+		else if (!strcmp(sw, "\\f")) { calmode = FUNCTION;		printf("Function Mode\n");		continue; } else if (!strcmp(sw, "\\a")) { calmode = ARITHMETIC;	printf("Arithemetic Mode\n");	continue; }
 		//else if (!strcmp(sw, "\\in-2"))	{ inmode = BIN;		printf("In-Bin\n");		continue; }
 		//else if (!strcmp(sw, "\\in-10"))	{ inmode = DEC;		printf("In-Dec\n");		continue; }
 		//else if (!strcmp(sw, "\\in-16"))	{ inmode = HEX;		printf("In-Hex\n");		continue; }
-		else if (!strcmp(sw, "\\out-2"))	{ outmode = BIN;	printf("Out-Bin\n");	continue; } 
-		else if (!strcmp(sw, "\\out-10"))	{ outmode = DEC;	printf("Out-Dec\n");	continue; } 
-		else if (!strcmp(sw, "\\out-16"))	{ outmode = HEX;	printf("Out-Hex\n");	continue; } 
+		else if (!strcmp(sw, "\\out-2")) { outmode = BIN;	printf("Out-Bin\n");	continue; } else if (!strcmp(sw, "\\out-10")) { outmode = DEC;	printf("Out-Dec\n");	continue; } else if (!strcmp(sw, "\\out-16")) { outmode = HEX;	printf("Out-Hex\n");	continue; }
 
-		else if (!strcmp(sw, "\\inmemo"))	{ memory = n; printf("memory=%lf\n", memory); 	continue; }
-		else if (!strcmp(sw, "\\+memo")) { memory += n; printf("memory=%lf\n", memory); 	continue; }
-		else if (!strcmp(sw, "\\-memo")) { memory -= n; printf("memory=%lf\n", memory); 	continue; }
-		else if (!strcmp(sw, "\\outmemo"))	{ printf("memory=%lf\n", memory); memory = 0;	continue; }
-		else if (!strcmp(sw, "\\reset")) {
+		else if (!strcmp(sw, "\\inmemo")) { memory = n; printf("memory=%lf\n", memory); 	continue; } else if (!strcmp(sw, "\\+memo")) { memory += n; printf("memory=%lf\n", memory); 	continue; } else if (!strcmp(sw, "\\-memo")) { memory -= n; printf("memory=%lf\n", memory); 	continue; } else if (!strcmp(sw, "\\outmemo")) { printf("memory=%lf\n", memory); memory = 0;	continue; } else if (!strcmp(sw, "\\reset")) {
 			n = 0.0;
 			printf(">>");
 			scanf_s("%lf", &n);
-			printf("\\help\n"); continue; 
+			printf("\\help\n"); continue;
 		}
 
-		else if (!strcmp(sw, "\\func")) { printfunc();	continue; }	//Œ©‚â‚·‚³“I‚ÉŠÖ”‰»
-		else if (!strcmp(sw, "\\help")) { printhelp();	continue; }	//Œ©‚â‚·‚³“I‚ÉŠÖ”‰»
+		else if (!strcmp(sw, "\\func")) { printfunc();	continue; }	//è¦‹ã‚„ã™ã•çš„ã«é–¢æ•°åŒ–
+		else if (!strcmp(sw, "\\help")) { printhelp();	continue; }	//è¦‹ã‚„ã™ã•çš„ã«é–¢æ•°åŒ–
 		else if (sw[0] == '\\') { printf("Command Error\n"); continue; }
 
 
@@ -76,26 +69,27 @@ int main(void) {
 			m = strtod(&sw[1], NULL);
 			break;
 		case FUNCTION:
-			//ŠÖ”‚Ì•¶š”ƒJƒEƒ“ƒg
+			//é–¢æ•°ã®æ–‡å­—æ•°ã‚«ã‚¦ãƒ³ãƒˆ
 			count = 1;
-			for (i = 1;sw[i] != '\0'; i++) {
+			for (i = 1; sw[i] != '\0'; i++) {
 				if (!isdigit(sw[i]))count++;
 			}
 			//printf("%d\n",count);
 			m = strtod(&sw[count], NULL);
-			if (sw[count] == 's')		m = sin(m * PI / 180.0);
-			else if(sw[count] == 'c')	m = cos(m * PI / 180.0);
-			else if (sw[count] == 't')	m = tan(m * PI / 180.0);
-			else if (sw[count] == 'p')	m = pow(n, m); 
-			else if (sw[count] == 'l')	m = log(m);
-			else if (sw[count] == 'r')	m = sqrt(m);
-			else if (sw[count] == '!')	m = factorial(m);
-			else if (sw[count] == 'm')	m = fmod(n,m);
-			else if (sw[count] == 'e' && sw[count + 1] == 'x')	m = exp(m);
-			else if (sw[count] == 'a' && sw[count + 1] == 's')	m = asin(m * PI / 180.0);
-			else if (sw[count] == 'a' && sw[count + 1] == 'c')	m = acos(m * PI / 180.0);
-			else if (sw[count] == 'a' && sw[count + 1] == 't')	m = atan(m * PI / 180.0);
-			else if (sw[count] == 'a' && sw[count + 1] == 'b')	m = fabs(m);
+			if (sw[1] == 's')		m = sin(m * PI / 180.0);
+			else if (sw[1] == 't')	m = tan(m * PI / 180.0);
+			else if (sw[1] == 'p')	m = pow(n, m);
+			else if (sw[1] == 'c')	m = cos(m * PI / 180.0);
+			else if (sw[1] == 'l')	m = log(m);
+			else if (sw[1] == 'r')	m = sqrt(m);
+			else if (sw[1] == '!')	m = factorial(m);
+			else if (sw[1] == 'm')	m = fmod(n, m);
+			else if (sw[1] == 'e' && sw[2] == 'x')	m = exp(m);
+			else if (sw[1] == 'a' && sw[2] == 's')	m = asin(m * PI / 180.0);
+			else if (sw[1] == 'a' && sw[2] == 'c')	m = acos(m * PI / 180.0);
+			else if (sw[1] == 'a' && sw[2] == 't')	m = atan(m * PI / 180.0);
+			else if (sw[1] == 'a' && sw[2] == 'b')	m = fabs(m);
+			else if (count > 1) { printf("Function Error\n"); continue; }
 
 		default:
 			break;
@@ -132,8 +126,8 @@ int main(void) {
 	return 0;
 }
 
-//¡‚Í‚Â‚©‚í‚È‚¢i‚ß‚ñ‚Ç‚­‚È‚Á‚½j
-//“ü—Í‚ğ2,10A16i”‚Æ•ÏX‚µ‚½‚Æ‚«‚É“ü—Íƒ`ƒFƒbƒN‚ğs‚¤
+//ä»Šã¯ã¤ã‹ã‚ãªã„ï¼ˆã‚ã‚“ã©ããªã£ãŸï¼‰
+//å…¥åŠ›ã‚’2,10ã€16é€²æ•°ã¨å¤‰æ›´ã—ãŸã¨ãã«å…¥åŠ›ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
 int InCheck(const char *n, int *mode) {
 	int i;
 	int ret;
@@ -148,7 +142,7 @@ int InCheck(const char *n, int *mode) {
 	return 0;
 }
 
-//o—ÍŠÖ”
+//å‡ºåŠ›é–¢æ•°
 void OutChange(double *a, int *mode) {
 	unsigned int bit = (1 << (sizeof(int) * 8 - 1));
 	char s[100];
@@ -175,30 +169,30 @@ void OutChange(double *a, int *mode) {
 	}
 }
 
-//ƒRƒ}ƒ“ƒhƒŠƒXƒg•\¦
+//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆè¡¨ç¤º
 void printhelp() {
 	printf("--Comand List--\n");
 	printf("OutMode\n");
-	printf("\\out-2\n");	//o—Í2i”
-	printf("    -10\n");	//o—Í10i”iƒfƒBƒtƒHƒ‹ƒgj
-	printf("    -16\n\n");	//o—Í16i”
+	printf("\\out-2\n");	//å‡ºåŠ›2é€²æ•°
+	printf("    -10\n");	//å‡ºåŠ›10é€²æ•°ï¼ˆãƒ‡ã‚£ãƒ•ã‚©ãƒ«ãƒˆï¼‰
+	printf("    -16\n\n");	//å‡ºåŠ›16é€²æ•°
 
 	printf("CalMode\n");
-	printf("\\f Function Mode\n");			//ŠÖ”ƒ‚[ƒh
-	printf("\\a Arithemetic Mode\n\n");		//’Êíƒ‚[ƒhi•Ï‚¦‚éˆÓ–¡‚ ‚é‚ñ‚©‚ÈHj
+	printf("\\f Function Mode\n");			//é–¢æ•°ãƒ¢ãƒ¼ãƒ‰
+	printf("\\a Arithemetic Mode\n\n");		//é€šå¸¸ãƒ¢ãƒ¼ãƒ‰ï¼ˆå¤‰ãˆã‚‹æ„å‘³ã‚ã‚‹ã‚“ã‹ãªï¼Ÿï¼‰
 
-	printf("\\reset Reset\n");	//ƒŠƒZƒbƒg
-	printf("\\inmemo\n");		//ƒƒ‚ƒŠ[‚ÉŠi”[
-	printf("\\+memo\n");		//ƒƒ‚ƒŠ[‚É{
-	printf("\\-memo\n");		//ƒƒ‚ƒŠ[‚É-
-	printf("\\outmemo\n");		//ƒƒ‚ƒŠ[‚Ì’l•\¦
+	printf("\\reset Reset\n");	//ãƒªã‚»ãƒƒãƒˆ
+	printf("\\inmemo\n");		//ãƒ¡ãƒ¢ãƒªãƒ¼ã«æ ¼ç´
+	printf("\\+memo\n");		//ãƒ¡ãƒ¢ãƒªãƒ¼ã«ï¼‹
+	printf("\\-memo\n");		//ãƒ¡ãƒ¢ãƒªãƒ¼ã«-
+	printf("\\outmemo\n");		//ãƒ¡ãƒ¢ãƒªãƒ¼ã®å€¤è¡¨ç¤º
 
-	printf("\\func function list\n");	//ŠÖ”ƒŠƒXƒg•\¦
-	printf("\\help \n");				//ƒRƒ}ƒ“ƒhƒŠƒXƒg•\¦
+	printf("\\func function list\n");	//é–¢æ•°ãƒªã‚¹ãƒˆè¡¨ç¤º
+	printf("\\help \n");				//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆè¡¨ç¤º
 	printf("--------------\n");
 }
 
-//ŠÖ”ƒŠƒXƒg•\¦
+//é–¢æ•°ãƒªã‚¹ãƒˆè¡¨ç¤º
 void printfunc() {
 	printf("--Function List--\n");
 	printf("s sin\n");
@@ -207,8 +201,8 @@ void printfunc() {
 	printf("l log\n");
 	printf("r sqrt\n");
 	printf("! factorial\n");
-	printf("ex ƒlƒCƒsƒA”e‚Ì‚×‚«æ\n");
-	printf("m ƒ‚ƒWƒ…ƒ\n");
+	printf("ex ãƒã‚¤ãƒ”ã‚¢æ•°eã®ã¹ãä¹—\n");
+	printf("m ãƒ¢ã‚¸ãƒ¥ãƒ­\n");
 	printf("as arcsin\n");
 	printf("ac arccons\n");
 	printf("at arctan\n");
@@ -217,7 +211,7 @@ void printfunc() {
 
 }
 
-//ŠKæ‚ğ‹‚ß‚éŠÖ”
+//éšä¹—ã‚’æ±‚ã‚ã‚‹é–¢æ•°
 double factorial(double n) {
 	if (n > 0) {
 		return n * factorial(n - 1);
